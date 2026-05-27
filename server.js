@@ -10,58 +10,47 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-/* =========================
-   SUPABASE CONNECTION
-========================= */
-
 const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_KEY
+  process.env.SUPABASE_KEY
 );
 
-/* =========================
-   HOME ROUTE
-========================= */
-
 app.get("/", (req, res) => {
-  res.send("Server Running Successfully");
+  res.json({
+    message: "Server Running Successfully"
+  });
 });
 
-/* =========================
-   REGISTER ROUTE
-========================= */
-
 app.post("/register", async (req, res) => {
-
   try {
 
     const {
       name,
       email,
       password,
-      age,
+      gender,
       qualification,
-      father_name,
-      mother_name,
-      phone,
+      age,
       address,
-      gender
+      phone,
+      father_name,
+      mother_name
     } = req.body;
 
     const { data, error } = await supabase
-      .from("applications")
+      .from("users")
       .insert([
         {
           name,
           email,
           password,
-          age,
+          gender,
           qualification,
-          father_name,
-          mother_name,
-          phone,
+          age,
           address,
-          gender
+          phone,
+          father_name,
+          mother_name
         }
       ]);
 
@@ -74,7 +63,7 @@ app.post("/register", async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Application Registered Successfully",
+      message: "Registration Successful",
       data
     });
 
@@ -86,15 +75,8 @@ app.post("/register", async (req, res) => {
     });
 
   }
-
 });
 
-/* =========================
-   PORT
-========================= */
-
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server Running on Port ${process.env.PORT}`);
 });
