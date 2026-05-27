@@ -7,7 +7,13 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
+/* CORS FIX */
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST"],
+  allowedHeaders: ["Content-Type"]
+}));
+
 app.use(express.json());
 
 const supabase = createClient(
@@ -15,13 +21,17 @@ const supabase = createClient(
   process.env.SUPABASE_KEY
 );
 
+/* TEST ROUTE */
 app.get("/", (req, res) => {
   res.json({
-    message: "Server Running Successfully"
+    success: true,
+    message: "Backend Working Successfully"
   });
 });
 
+/* REGISTER ROUTE */
 app.post("/register", async (req, res) => {
+
   try {
 
     const {
@@ -75,8 +85,11 @@ app.post("/register", async (req, res) => {
     });
 
   }
+
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server Running on Port ${process.env.PORT}`);
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server Running on ${PORT}`);
 });
