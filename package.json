@@ -1,12 +1,22 @@
 {
   "name": "online-application",
   "version": "1.0.0",
-  "type": "module",
+  "description": "Online Application Form with Supabase and Render",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "start": "node server.js"
   },
+  "keywords": [
+    "supabase",
+    "render",
+    "express",
+    "application-form"
+  ],
+  "author": "Your Name",
+  "license": "ISC",
   "dependencies": {
+    "@supabase/supabase-js": "^2.49.8",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2"
